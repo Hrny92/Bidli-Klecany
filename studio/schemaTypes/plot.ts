@@ -1,23 +1,5 @@
 import { defineField, defineType } from 'sanity'
 
-/**
- * Schema pozemku
- *
- * Pole která SPRAVUJE KLIENT (editovatelná):
- *   - status       – volný / rezervováno / prodáno
- *   - description  – popis na kartě v modálním okně
- *   - disposition  – dispozice dle dokumentace
- *   - floorArea    – užitná plocha RD
- *   - plotSize     – velikost pozemku
- *   - price        – cena pozemku
- *   - floorPlans   – soubory: půdorysy (PDF, obrázek, Word)
- *   - catalogSheets – soubory: katalogové listy (PDF, obrázek, Word)
- *
- * Pole FIXNÍ (jen pro identifikaci, klient neupravuje):
- *   - number       – číslo pozemku (read-only, propojení s mapou)
- */
-
-// Typy souborů které klient může nahrát
 const ACCEPT_FILES = 'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
 export const plotSchema = defineType({
@@ -25,25 +7,39 @@ export const plotSchema = defineType({
   title: 'Pozemky',
   type: 'document',
   fields: [
-
-    
-
-    // ── FIXNÍ – jen pro identifikaci, klient neupravuje ───────────────────
+    // ── FIXNÍ – jen pro identifikaci ──────────────────────────────────────────
     defineField({
       name: 'number',
       title: 'Číslo pozemku',
       type: 'string',
-      description: 'Číslo pozemku – propojení s mapou (např. 1, 15, 20…). Neupravujte.',
+      description: 'Číslo pozemku – propojení s mapou (např. 1, 2, 13). Neupravujte.',
       readOnly: true,
     }),
 
-    // ── EDITOVATELNÁ – klient mění ─────────────────────────────────────────
+    // ── EDITOVATELNÁ ───────────────────────────────────────────────────────────
     defineField({
       name: 'hidden',
       title: 'Skrýt pozemek',
       type: 'boolean',
-      description: 'Skrytý pozemek se nezobrazuje na mapě ani v tabulce na webu.',
+      description: 'Skrytý pozemek se nezobrazuje na webu.',
       initialValue: false,
+    }),
+
+    defineField({
+      name: 'offerType',
+      title: 'Typ nabídky',
+      type: 'string',
+      description: 'Co je v nabídce u tohoto pozemku?',
+      options: {
+        list: [
+          { title: '📐 Jen pozemek',             value: 'pozemek' },
+          { title: '🏠 Pozemek + dům 5+kk',      value: 'dum' },
+          { title: '✨ Oboje – klient si vybere', value: 'oboje' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'oboje',
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -52,9 +48,9 @@ export const plotSchema = defineType({
       type: 'string',
       options: {
         list: [
-          { title: '🟢 Volný',      value: 'volný' },
-          { title: '🟡 Rezervace',  value: 'rezervováno' },
-          { title: '🔴 Prodáno',    value: 'prodáno' },
+          { title: '🟢 Volný',     value: 'volný' },
+          { title: '🟡 Rezervace', value: 'rezervováno' },
+          { title: '🔴 Prodáno',   value: 'prodáno' },
         ],
         layout: 'radio',
       },
@@ -63,62 +59,77 @@ export const plotSchema = defineType({
     }),
 
     defineField({
-      name: 'price',
-      title: 'Cena pozemku',
+      name: 'plotSize',
+      title: 'Plocha pozemku (m²)',
       type: 'string',
-      description: 'Např. „4 950 000 Kč" nebo „Info u makléře"',
-    }),
-
-    defineField({
-      name: 'disposition',
-      title: 'Dispozice dle dokumentace',
-      type: 'string',
-      description: 'Např. „5+1" nebo „4+kk"',
+      description: 'Např. „620 m²"',
     }),
 
     defineField({
       name: 'floorArea',
-      title: 'Užitná plocha RD (m²)',
+      title: 'Plocha domu (m²)',
       type: 'string',
-      description: 'Např. „260,2 m²"',
+      description: 'Užitná plocha rodinného domu, např. „180 m²"',
     }),
 
     defineField({
-      name: 'plotSize',
-      title: 'Velikost pozemku (m²)',
+      name: 'disposition',
+      title: 'Dispozice domu',
       type: 'string',
-      description: 'Např. „728 m²"',
+      description: 'Např. „5+kk"',
+      initialValue: '5+kk',
     }),
 
+    // ── CENY ──────────────────────────────────────────────────────────────────
+    defineField({
+      name: 'price',
+      title: 'Cena – jen pozemek',
+      type: 'string',
+      description: 'Cena samotného pozemku, např. „3 990 000 Kč"',
+    }),
+
+    defineField({
+      name: 'priceWithHouse',
+      title: 'Cena – pozemek + dům ve hrubé stavbě',
+      type: 'string',
+      description: 'Cena pozemku spolu s domem, např. „6 990 000 Kč"',
+    }),
+
+    // ── POPISY ────────────────────────────────────────────────────────────────
     defineField({
       name: 'description',
-      title: 'Popis pozemku',
+      title: 'Popis pozemku (jen pozemek)',
       type: 'text',
       rows: 4,
-      description: 'Text zobrazený na kartě v detailu pozemku. Pokud nevyplníte, použije se výchozí popis.',
+      description: 'Text zobrazený na kartě při nabídce samotného pozemku.',
+    }),
+
+    defineField({
+      name: 'descriptionWithHouse',
+      title: 'Popis pozemku + domu',
+      type: 'text',
+      rows: 4,
+      description: 'Doplňující text při variantě pozemek + dům ve hrubé stavbě.',
+    }),
+
+    // ── FOTOGRAFIE A SOUBORY ──────────────────────────────────────────────────
+    defineField({
+      name: 'photos',
+      title: 'Fotografie / vizualizace',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Fotky nebo vizualizace pozemku/domu.',
     }),
 
     defineField({
       name: 'floorPlans',
       title: 'Půdorysy',
       type: 'array',
-      description: 'Nahrajte půdorysy jako PDF, Word (.docx) nebo obrázky.',
       of: [{
         type: 'object',
         fields: [
-          {
-            name: 'file',
-            title: 'Soubor',
-            type: 'file',
-            options: { accept: ACCEPT_FILES },
-
-          },
-          {
-            name: 'title',
-            title: 'Název souboru (volitelný)',
-            type: 'string',
-            description: 'Např. „Přízemí", „Patro 1", „Celkový půdorys"',
-          },
+          { name: 'file', title: 'Soubor', type: 'file', options: { accept: ACCEPT_FILES } },
+          { name: 'title', title: 'Název souboru (volitelný)', type: 'string' },
         ],
         preview: {
           select: { title: 'title' },
@@ -133,23 +144,11 @@ export const plotSchema = defineType({
       name: 'catalogSheets',
       title: 'Katalogové listy',
       type: 'array',
-      description: 'Nahrajte katalogové listy jako PDF, Word (.docx) nebo obrázky.',
       of: [{
         type: 'object',
         fields: [
-          {
-            name: 'file',
-            title: 'Soubor',
-            type: 'file',
-            options: { accept: ACCEPT_FILES },
-
-          },
-          {
-            name: 'title',
-            title: 'Název souboru (volitelný)',
-            type: 'string',
-            description: 'Např. „Katalogový list – pozemek 16"',
-          },
+          { name: 'file', title: 'Soubor', type: 'file', options: { accept: ACCEPT_FILES } },
+          { name: 'title', title: 'Název souboru (volitelný)', type: 'string' },
         ],
         preview: {
           select: { title: 'title' },
@@ -159,15 +158,14 @@ export const plotSchema = defineType({
         },
       }],
     }),
-
   ],
   preview: {
-    select: { num: 'number', id: '_id', subtitle: 'status' },
-    prepare({ num, id, subtitle }: { num?: string; id?: string; subtitle?: string }) {
-      // Číslo pozemku: z pole number, nebo z _id (plot-1 → "1"), nebo "?"
+    select: { num: 'number', id: '_id', subtitle: 'status', offerType: 'offerType' },
+    prepare({ num, id, subtitle, offerType }: { num?: string; id?: string; subtitle?: string; offerType?: string }) {
       const n = num ?? id?.replace(/^plot-/, '') ?? '?'
       const emoji = subtitle === 'volný' ? '🟢' : subtitle === 'rezervováno' ? '🟡' : '🔴'
-      return { title: `Pozemek ${n}`, subtitle: `${emoji} ${subtitle ?? '–'}` }
+      const offerEmoji = offerType === 'pozemek' ? '📐' : offerType === 'dum' ? '🏠' : '✨'
+      return { title: `${offerEmoji} Pozemek ${n}`, subtitle: `${emoji} ${subtitle ?? '–'}` }
     },
   },
 })

@@ -1,27 +1,10 @@
-import type { MetadataRoute } from 'next'
-import { SITE } from '@/lib/seo'
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
-
+  const base = 'https://www.bidlivklecanech.cz'
   return [
-    {
-      url: SITE.url,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 1.0,
-    },
-    {
-      url: `${SITE.url}/domy`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${SITE.url}/sluzby`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
+    { url: base,            lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
+    { url: `${base}/pozemky`, lastModified: new Date(), changeFrequency: 'daily',  priority: 0.9 },
+    { url: `${base}/sluzby`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
   ]
 }

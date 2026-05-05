@@ -5,18 +5,14 @@ export const siteConfigSchema = defineType({
   title: 'Nastavení webu',
   type: 'document',
   fields: [
-    defineField({ name: 'siteName',    title: 'Název projektu',     type: 'string' }),
-    defineField({ name: 'agentName',   title: 'Jméno makléře',      type: 'string' }),
-    defineField({ name: 'agentPhone',  title: 'Telefon',            type: 'string' }),
-    defineField({ name: 'agentEmail',  title: 'E-mail',             type: 'string' }),
-    defineField({ name: 'agentPhoto',  title: 'Foto makléře',       type: 'image', options: { hotspot: true } }),
-    defineField({ name: 'agentQuote',  title: 'Citát / motto',      type: 'text' }),
-    defineField({ name: 'agentBio',    title: 'Bio (text ve footeru)', type: 'text', description: 'Krátký popis makléře zobrazený ve spodní části footeru.' }),
+    defineField({ name: 'agentName',  title: 'Jméno makléře / týmu', type: 'string' }),
+    defineField({ name: 'agentPhone', title: 'Telefon', type: 'string' }),
+    defineField({ name: 'agentEmail', title: 'E-mail', type: 'string' }),
+    defineField({ name: 'agentPhoto', title: 'Foto makléře', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'agentQuote', title: 'Citát v patičce', type: 'text', rows: 2 }),
+    defineField({ name: 'agentBio',   title: 'Bio text v patičce', type: 'text', rows: 3 }),
   ],
   preview: {
-    select: { title: 'siteName' },
-    prepare({ title }) {
-      return { title: title ?? 'Nastavení webu' }
-    },
+    prepare() { return { title: 'Nastavení webu' } },
   },
 })

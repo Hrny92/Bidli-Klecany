@@ -1,13 +1,13 @@
-import { houseSchema } from './house'
-import { siteConfigSchema } from './siteConfig'
 import { homepageSchema } from './homepage'
-import { galleryAlbumSchema } from './galleryAlbum'
+import { plotSchema } from './plot'
+import { siteConfigSchema } from './siteConfig'
 import { servicesSchema } from './services'
+import { galleryAlbumSchema } from './galleryAlbum'
 
 export const schemaTypes = [
-  siteConfigSchema,
   homepageSchema,
+  plotSchema,
+  siteConfigSchema,
   servicesSchema,
-  houseSchema,
   galleryAlbumSchema,
 ]

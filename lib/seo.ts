@@ -3,23 +3,23 @@ import type { Metadata } from 'next'
 // ─── Konfigurace webu ──────────────────────────────────────────────────────────
 
 export const SITE = {
-  name: 'Bidli v Hrabicích',
-  url: 'https://www.bidlivhrabicich.cz',
-  ogImage: 'https://www.bidlivhrabicich.cz/img/og-image.webp',
+  name: 'Bidli v Klecanech',
+  url: 'https://www.bidlivklecanech.cz',
+  ogImage: 'https://www.bidlivklecanech.cz/img/og-image.webp',
   description:
-    'Prodej rodinných domů ve hrubé stavbě v obci Hrabice (Město Vimperk). 16 jednotek v 8 dvojdomech a 2 solitérní domy. Dokončení dle vlastních představ. Jihočeský kraj.',
+    'Exkluzivní pozemky s vydaným stavebním povolením v Klecanech 5 km od Prahy. Vyberte si: jen pozemek nebo pozemek s rodinným domem 5+kk ve hrubé stavbě.',
   agent: {
-    name: 'Zuzana Benedyktová',
-    phone: '+420723117023',
-    phoneFormatted: '+420 723 117 023',
-    email: 'zuzana.benedyktova@bidli.cz',
+    name: 'Bidli Klecany',
+    phone: '+420774110007',
+    phoneFormatted: '+420 774 110 007',
+    email: 'info@bidli.cz',
     brand: 'BIDLI',
     brandUrl: 'https://www.bidli.cz',
   },
   address: {
-    locality: 'Hrabice',
-    region: 'Jihočeský kraj',
-    postalCode: '385 01',
+    locality: 'Klecany',
+    region: 'Praha-východ',
+    postalCode: '250 67',
     country: 'CZ',
     countryName: 'Česká republika',
   },
@@ -120,12 +120,12 @@ export const schemaOrganization = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 49.0583,
-    longitude: 13.7786,
+    latitude: 50.1895,
+    longitude: 14.4038,
   },
   areaServed: {
     '@type': 'City',
-    name: 'Hrabice',
+    name: 'Klecany',
   },
   sameAs: [
     SITE.social.facebook,
@@ -134,14 +134,6 @@ export const schemaOrganization = {
     SITE.social.youtube,
     SITE.agent.brandUrl,
   ],
-  employee: {
-    '@type': 'Person',
-    name: SITE.agent.name,
-    jobTitle: 'Realitní specialistka',
-    telephone: SITE.agent.phone,
-    email: SITE.agent.email,
-    worksFor: { '@id': `${SITE.url}/#organization` },
-  },
 }
 
 /** FAQPage */
@@ -151,62 +143,62 @@ export const schemaFAQ = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Kde se projekt Bidli v Hrabicích nachází?',
+      name: 'Kde se projekt Bidli v Klecanech nachází?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Projekt se nachází v obci Hrabice, která je součástí Města Vimperk, v Jihočeském kraji. Lokalita nabízí klidné bydlení v přírodě v blízkosti Šumavy.',
+        text: 'Projekt se nachází ve městě Klecany v okrese Praha-východ, pouhých 5 km od Prahy. Autem jste na okraji Prahy za 8 minut.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Kolik domů je v nabídce?',
+      name: 'Kolik pozemků je v nabídce?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'V nabídce je celkem 18 rodinných domů: 16 jednotek v 8 dvojdomech (SO01–SO16) a 2 solitérní rodinné domy (SO05, SO12).',
+        text: 'V nabídce je celkem 13 pozemků s vydaným stavebním povolením na rodinné domy 5+kk.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Jaká je užitná plocha domů?',
+      name: 'Mohu si vybrat jen pozemek, nebo musím koupit i dům?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Jednotky v dvojdomech mají užitnou plochu 110,5 m². Solitérní rodinné domy mají užitnou plochu 94,7 m².',
+        text: 'Máte svobodnou volbu! Pozemek si můžete koupit samostatně – a dům postavit zcela podle sebe. Nebo si rovnou pořídíte pozemek spolu s rodinným domem 5+kk ve hrubé stavbě k dokončení.',
       },
     },
     {
       '@type': 'Question',
-      name: 'V jakém stavu jsou domy prodávány?',
+      name: 'Jak se dostat z Klecan do Prahy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Domy jsou prodávány ve stavu hrubé stavby k dokončení. Klient si dokončení interiérů a povrchů řeší po vlastní ose dle svých představ a potřeb.',
+        text: 'Autem jste na okraji Prahy za 8 minut. Autobusové linky zajišťují pravidelné dopravní spojení. Mezi břehy Vltavy funguje historický přívoz a cyklisté mohou využít novou cyklostezku vedoucí do Prahy.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Jak kontaktovat makléřku Zuzanu Benedyktovou?',
+      name: 'Jak kontaktovat prodejce?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Zuzanu Benedyktovou zastihete na telefonním čísle +420 723 117 023 nebo e-mailem zuzana.benedyktova@bidli.cz.',
+        text: 'Dosáhnete nás na telefonním čísle +420 774 110 007 nebo e-mailem info@bidli.cz.',
       },
     },
   ],
 }
 
-/** RealEstateListing pro domy */
-export const schemaDomy = {
+/** ItemList schema pro pozemky */
+export const schemaPozemky = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  '@id': `${SITE.url}/domy#listing`,
-  name: 'Rodinné domy Hrabice – nabídka',
-  description: '18 rodinných domů ve hrubé stavbě k dokončení v obci Hrabice (Město Vimperk). 16 jednotek v dvojdomech + 2 solitéry.',
-  numberOfItems: 18,
-  url: `${SITE.url}/domy`,
+  '@id': `${SITE.url}/pozemky#listing`,
+  name: 'Klecany – nabídka pozemků a domů',
+  description: '13 pozemků s vydaným stavebním povolením v Klecanech 5 km od Prahy. Vyberte si pozemek nebo pozemek s domem 5+kk ve hrubé stavbě.',
+  numberOfItems: 13,
+  url: `${SITE.url}/pozemky`,
   provider: { '@id': `${SITE.url}/#organization` },
 }
 
-// Aliases pro zpětnou kompatibilitu
-export const schemaPozemky = schemaDomy
-export const schemaByty = schemaDomy
+// Aliases
+export const schemaDomy = schemaPozemky
+export const schemaByty = schemaPozemky
 
 /** BreadcrumbList builder */
 export function schemaBreadcrumb(items: { name: string; path: string }[]) {

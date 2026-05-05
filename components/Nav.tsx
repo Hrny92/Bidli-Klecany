@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { href: '/#Technicke-udaje',  label: 'Parametry' },
   { href: '/#Lokalita',         label: 'Lokalita' },
   { href: '/#Galerie',          label: 'Galerie' },
-  { href: '/domy',              label: 'Domy' },
+  { href: '/pozemky',           label: 'Nabídka' },
   { href: '/sluzby',            label: 'Služby' },
 ]
 
@@ -73,9 +73,9 @@ export default function Nav() {
 
           <nav className="hidden xl:block">
             <ul className="flex items-center gap-1 font-bold text-primary">
-              <li><TransitionLink href="/"       className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">O projektu</TransitionLink></li>
-              <li><TransitionLink href="/domy"   className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">Domy</TransitionLink></li>
-              <li><TransitionLink href="/sluzby" className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">Služby</TransitionLink></li>
+              <li><TransitionLink href="/"         className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">O projektu</TransitionLink></li>
+              <li><TransitionLink href="/pozemky"  className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">Nabídka</TransitionLink></li>
+              <li><TransitionLink href="/sluzby"   className="px-5 py-2.5 rounded-full hover:text-accent transition-colors">Služby</TransitionLink></li>
             </ul>
           </nav>
 

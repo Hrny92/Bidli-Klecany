@@ -33,9 +33,9 @@ export default async function Footer() {
   const agentName     = config.agentName     || SITE.agent.name
   const agentPhone    = config.agentPhone    || SITE.agent.phoneFormatted
   const agentEmail    = config.agentEmail    || SITE.agent.email
-  const agentPhotoUrl = config.agentPhotoUrl || '/img/Benedyktova.png'
+  const agentPhotoUrl = config.agentPhotoUrl || null
   const agentQuote    = config.agentQuote    || 'Ráda se s vámi potkám přímo na místě, nebo vám zašlu doplňující informace a plány. Napište mi.'
-  const agentBio      = config.agentBio      || `${agentName}, realitní specialistka sítě BIDLI. Ráda vás provedu nabídkou rodinných domů v obci Hrabice u Vimperka a pomohu zajistit hladký průběh koupě.`
+  const agentBio      = config.agentBio      || `Tým BIDLI – specialisté na prodej pozemků a rodinných domů v Klecanech u Prahy. Rádi vás provedeme nabídkou a pomohou zajistit hladký průběh koupě.`
   const agentPhoneRaw = agentPhone.replace(/\s/g, '')
 
   return (
@@ -49,19 +49,19 @@ export default async function Footer() {
       <div id="Kontakt" className="relative pt-0 pb-0 overflow-hidden">
         <div className="absolute top-10 left-0 w-full text-center overflow-hidden pointer-events-none select-none z-0">
           <span className="text-[15vw] font-black text-gray-900/[0.03] md:text-gray-900/[0.02] leading-none whitespace-nowrap">
-            NAPIŠTE MI
+            NAPIŠTE NÁM
           </span>
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
 
-            {/* Levý sloupec s agentem */}
+            {/* Levý sloupec */}
             <div className="lg:col-span-5 relative flex flex-col justify-end min-h-[350px] lg:min-h-[550px]">
               <div className="absolute bottom-0 lg:bottom-20 left-0 w-full z-30 text-center lg:text-left pointer-events-none px-4 lg:px-0">
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight drop-shadow-[0_5px_15px_rgba(255,255,255,0.8)]">
-                  Zajímají vás <br />
-                  <span>tyto domy?</span>
+                  Zajímá vás <br />
+                  <span>tato nabídka?</span>
                 </h2>
                 <div className="bg-white/60 backdrop-blur-md border border-gray-200 p-6 rounded-[2rem] shadow-xl relative z-30 max-w-sm mx-auto lg:mx-0 pointer-events-auto">
                   <p className="text-gray-700 text-lg font-light italic border-l-2 border-accent pl-4">
@@ -70,14 +70,18 @@ export default async function Footer() {
                 </div>
               </div>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-accent rounded-full blur-[120px] opacity-10 z-0" />
-              <Image
-                src={agentPhotoUrl}
-                alt={agentName}
-                width={500}
-                height={600}
-                className="w-full max-w-[500px] object-contain object-bottom relative z-10 mx-auto lg:ml-auto lg:mr-0 -mb-px pt-48 drop-shadow-[0_-10px_30px_rgba(0,0,0,0.1)] pointer-events-none"
-                unoptimized={agentPhotoUrl.startsWith('https://')}
-              />
+              {agentPhotoUrl ? (
+                <Image
+                  src={agentPhotoUrl}
+                  alt={agentName}
+                  width={500}
+                  height={600}
+                  className="w-full max-w-[500px] object-contain object-bottom relative z-10 mx-auto lg:ml-auto lg:mr-0 -mb-px pt-48 drop-shadow-[0_-10px_30px_rgba(0,0,0,0.1)] pointer-events-none"
+                  unoptimized={agentPhotoUrl.startsWith('https://')}
+                />
+              ) : (
+                <div className="w-full max-w-[500px] relative z-10 mx-auto lg:ml-auto lg:mr-0 pt-48 aspect-[5/6] bg-pink-500 rounded-t-[2.5rem]" />
+              )}
             </div>
 
             {/* Kontaktní formulář */}
@@ -133,10 +137,10 @@ export default async function Footer() {
             <h3 className="font-bold text-lg mb-6">Menu</h3>
             <ul className="space-y-3">
               {[
-                { href: '/',        label: 'O projektu' },
-                { href: '/domy',    label: 'Domy' },
-                { href: '/sluzby',  label: 'Služby' },
-                { href: '#Kontakt', label: 'Kontakt' },
+                { href: '/',          label: 'O projektu' },
+                { href: '/pozemky',   label: 'Nabídka' },
+                { href: '/sluzby',    label: 'Služby' },
+                { href: '#Kontakt',   label: 'Kontakt' },
               ].map((item) => (
                 <li key={item.href}>
                   <TransitionLink
@@ -154,13 +158,13 @@ export default async function Footer() {
             <h3 className="font-bold text-lg mb-6">Kontakt</h3>
             <div className="flex flex-col gap-4">
               <a href={`tel:${agentPhoneRaw}`} className="group">
-                <p className="text-xs uppercase tracking-wider mb-1">Zavolejte mi</p>
+                <p className="text-xs uppercase tracking-wider mb-1">Zavolejte nám</p>
                 <span className="text-xl md:text-2xl font-bold group-hover:text-accent transition-colors">
                   {agentPhone}
                 </span>
               </a>
               <a href={`mailto:${agentEmail}`} className="group mt-2">
-                <p className="text-xs uppercase tracking-wider mb-1">Napište mi</p>
+                <p className="text-xs uppercase tracking-wider mb-1">Napište nám</p>
                 <span className="text-lg font-light group-hover:text-accent transition-colors">
                   {agentEmail}
                 </span>
@@ -170,7 +174,7 @@ export default async function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 relative z-10">
-          <p>&copy; 2026 {agentName} | BIDLI. Všechna práva vyhrazena.</p>
+          <p>&copy; 2026 BIDLI v Klecanech. Všechna práva vyhrazena.</p>
           <div className="flex gap-6">
             <a
               href="https://www.bidli.cz/informace-o-webu/"
