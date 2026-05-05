@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { sanityClient } from '@/sanity/client'
 import PozemkyClient, { type SanityPlot } from './PozemkyClient'
 import { buildMetadata } from '@/lib/seo'
@@ -94,5 +95,9 @@ export default async function PozemkyPage() {
     plots = FALLBACK_PLOTS
   }
 
-  return <PozemkyClient plots={plots} galleryImages={galleryImages} albums={albums} />
+  return (
+    <Suspense>
+      <PozemkyClient plots={plots} galleryImages={galleryImages} albums={albums} />
+    </Suspense>
+  )
 }
