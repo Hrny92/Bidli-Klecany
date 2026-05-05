@@ -195,7 +195,7 @@ export default function PozemkyClient({ plots, galleryImages = [], albums }: Pro
             }`}
           />
           <img
-            src="/img/Domy.png"
+            src="/img/domy.png"
             alt="Situace – pozemky s domy"
             loading="eager"
             className={`w-full h-auto object-contain transition-opacity duration-300 ${
