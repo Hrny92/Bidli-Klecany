@@ -118,7 +118,7 @@ export default function PozemkyClient({ plots, galleryImages = [], albums }: Pro
       <section className="relative p-2 h-[40vh] min-h-[400px]">
         <div className="relative flex flex-col justify-center h-full rounded-[3rem] overflow-hidden bg-gray-900">
           <img
-            src="/img/Exteri%C3%A9r%20-%20lokalita/01%20-%20%C3%BAvodn%C3%AD%20foto%20(kopie).jpg"
+            src="/img/hero-nabidka.jpg"
             alt="Klecany – nabídka pozemků"
             className="absolute inset-0 w-full h-full object-cover"
           />
